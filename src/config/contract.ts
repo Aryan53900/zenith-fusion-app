@@ -1,11 +1,28 @@
 export const SWAP_HELPER_ADDRESS = "0x92e9cc05b7935a4bea5669546e3f49df0c9853be";
 
 export const SWAP_HELPER_ABI = [
+  // View functions
   "function routers(bytes32) view returns (address)",
+  "function owner() view returns (address)",
+  
+  // Admin functions
+  "function setRouter(bytes32 id, address router)",
+  "function removeRouter(bytes32 id)",
+  
+  // Swap functions
   "function executeSwapV2(bytes32 routerId, uint256 amountIn, uint256 amountOutMin, address[] calldata path, uint256 deadline) returns (uint256[] memory amounts)",
   "function executeSwapV3ExactInputSingle(bytes32 routerId, address tokenIn, address tokenOut, uint24 fee, uint256 amountIn, uint256 amountOutMinimum, uint256 deadline, uint160 sqrtPriceLimitX96) returns (uint256 amountOut)",
+  
+  // Rescue functions
+  "function rescueERC20(address token, address to, uint256 amount)",
+  "function rescueETH(address payable to)",
+  
+  // Events
+  "event RouterSet(bytes32 indexed id, address indexed router)",
   "event SwapV2Executed(address indexed user, bytes32 indexed routerId, address[] path, uint amountIn, uint amountOut)",
   "event SwapV3Executed(address indexed user, bytes32 indexed routerId, address tokenIn, address tokenOut, uint24 fee, uint amountIn, uint amountOut)",
+  "event RescueERC20(address indexed token, address indexed to, uint256 amount)",
+  "event RescueETH(address indexed to, uint256 amount)",
 ];
 
 export const ERC20_ABI = [

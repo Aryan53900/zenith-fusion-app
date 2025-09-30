@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useWeb3 } from "@/contexts/Web3Context";
 import Navbar from "@/components/Navbar";
 import SwapWidget from "@/components/SwapWidget";
+import ContractTest from "@/components/ContractTest";
 import { TrendingUp, Shield, Zap } from "lucide-react";
 
 export default function Index() {
@@ -28,8 +29,9 @@ export default function Index() {
           {/* Main Content */}
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Swap Widget */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-2 space-y-6">
               <SwapWidget />
+              <ContractTest />
             </div>
 
             {/* Features Sidebar */}

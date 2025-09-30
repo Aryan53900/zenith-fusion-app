@@ -96,6 +96,53 @@ export async function executeSwapV2(
   }
 }
 
+export async function executeSwapV3ExactInputSingle(
+  routerId: string,
+  tokenIn: string,
+  tokenOut: string,
+  fee: number,
+  amountIn: string,
+  amountOutMinimum: string,
+  deadline: number,
+  decimalsIn: number,
+  decimalsOut: number,
+  sqrtPriceLimitX96: bigint = 0n
+) {
+  try {
+    const contract = await getSwapHelperContract();
+    const amountInWei = parseUnits(amountIn, decimalsIn);
+    const amountOutMinWei = parseUnits(amountOutMinimum, decimalsOut);
+    
+    const tx = await contract.executeSwapV3ExactInputSingle(
+      routerId,
+      tokenIn,
+      tokenOut,
+      fee,
+      amountInWei,
+      amountOutMinWei,
+      deadline,
+      sqrtPriceLimitX96
+    );
+    
+    const receipt = await tx.wait();
+    return receipt;
+  } catch (error) {
+    console.error("Error executing V3 swap:", error);
+    throw error;
+  }
+}
+
+export async function getRouterAddress(routerId: string): Promise<string> {
+  try {
+    const contract = await getSwapHelperContract();
+    const routerAddress = await contract.routers(routerId);
+    return routerAddress;
+  } catch (error) {
+    console.error("Error getting router address:", error);
+    return "0x0000000000000000000000000000000000000000";
+  }
+}
+
 declare global {
   interface Window {
     ethereum?: any;
